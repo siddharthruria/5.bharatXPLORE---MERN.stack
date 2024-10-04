@@ -188,7 +188,7 @@ router.delete("/:stateId", fetchUser, isAdmin, async (req, res) => {
     await State.findByIdAndDelete(req.params.stateId);
     res.status(200).json({
       success: true,
-      message: "deleted state successfully",
+      message: "state deleted successfully",
       state: state,
     });
   } catch (error) {
@@ -208,17 +208,19 @@ router.delete("/:stateId", fetchUser, isAdmin, async (req, res) => {
 
 router.get("/:stateId/contributions", fetchUser, async (req, res) => {
   try {
-    const state = await State.findById(req.params.stateId);
-    if (!state) {
+    const contributions = await Contribution.find({
+      state: req.params.stateId,
+    });
+    if (!contributions) {
       return res.status(404).json({
         success: false,
         error: "state not found",
       });
     }
-    await state.populate("contributions");
     res.status(200).json({
       success: true,
-      contributions: state.contributions,
+      message: "contributions for the state",
+      contributions,
     });
   } catch (error) {
     console.error(error);
@@ -228,5 +230,4 @@ router.get("/:stateId/contributions", fetchUser, async (req, res) => {
     });
   }
 });
-
 module.exports = router;

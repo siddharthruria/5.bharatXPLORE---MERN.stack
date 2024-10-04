@@ -39,16 +39,17 @@ const createAdminUser = async () => {
     console.error("error creating admin", error);
   }
 };
-
 createAdminUser();
 
 // importing routes
 const userRoutes = require("./routes/user");
 const stateRoutes = require("./routes/state");
+const contributionRoute = require("./routes/contribution");
 
 // using the routes
 app.use("/api/user", userRoutes);
 app.use("/api/states", stateRoutes);
+app.use("/api/states", contributionRoute);
 
 // home route
 app.get("/", (req, res) => {
