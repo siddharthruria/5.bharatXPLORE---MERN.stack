@@ -14,27 +14,29 @@ const stateSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Contribution",
+      default: [],
     },
   ],
   images: [
     {
       type: String,
+      default: [],
     },
   ],
   createdAt: {
     type: String,
     default: () => {
       const date = new Date();
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        timeZoneName: 'short'
+      return date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZoneName: "short",
       });
-    }
+    },
   },
 });
 

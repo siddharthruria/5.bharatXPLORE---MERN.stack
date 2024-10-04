@@ -2,14 +2,12 @@ const mongoose = require("mongoose");
 
 const contributionSchema = mongoose.Schema({
   user: {
-    type: String,
-    required: true,
-    ref: "User.username",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   state: {
-    type: String,
-    required: true,
-    ref: "State.name",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "State",
   },
   category: {
     type: String,
@@ -36,17 +34,17 @@ const contributionSchema = mongoose.Schema({
     type: String,
     default: () => {
       const date = new Date();
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        timeZoneName: 'short'
+      return date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZoneName: "short",
       });
-    }
-  }
+    },
+  },
 });
 
 module.exports = mongoose.model("Contribution", contributionSchema);

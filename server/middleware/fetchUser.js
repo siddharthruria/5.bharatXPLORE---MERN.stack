@@ -1,6 +1,5 @@
-// middleware to verify whether to give the right logged in user the details.
+// middleware to verify whether to give the right logged in user the details
 
-const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -18,14 +17,24 @@ const fetchUser = async (req, res, next) => {
   try {
     // verify the token and extract the user details
     const payload = jwt.verify(token, JWT_SECRET);
+
+    // add the payload data to the request object
     req.user = payload.user;
 
-    next(); // proceeding to the next middlware (i.e. /getUser)
+    next(); // proceeding to the next middleware (i.e. /getUser)
   } catch (error) {
-    return res.status(401).json({
-      success: false,
-      error: "please authenticate using a valid token",
-    });
+    // if the token has expired (~1hr)
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        error: "token has expired. please log in again",
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        error: "please authenticate using a valid token",
+      });
+    }
   }
 };
 

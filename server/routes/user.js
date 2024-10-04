@@ -1,3 +1,5 @@
+// user authentication routes
+
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
@@ -73,6 +75,7 @@ router.post(
         user: {
           id: user._id,
           username: user.username,
+          role: user.role,
         },
       };
 
@@ -137,10 +140,11 @@ router.post(
         user: {
           id: user._id,
           username: user.username,
+          role: user.role,
         },
       };
 
-      const authToken = jwt.sign(payload, JWT_SECRET);
+      const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
 
       res.status(200).json({
         success: true,
@@ -166,6 +170,7 @@ router.get(
   fetchUser,
   async (req, res) => {
     try {
+      // req.user populated with the payload info. by the middleware
       const userId = req.user.id;
 
       // excluding password from the response
@@ -177,6 +182,11 @@ router.get(
           success: false,
           error: "user not found",
         });
+      }
+
+      // if the user is not admin, hide email
+      if (user.role !== "admin") {
+        user.email = undefined;
       }
 
       // user authenticated successfully and proceed to send data

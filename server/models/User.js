@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
       default: [], // set default as no contributions
     },
   ],
+  role: {
+    type: String,
+    default: 'user' // default set to user. no admin-privileges
+  },
   createdAt: {
     type: String,
     default: () => {
