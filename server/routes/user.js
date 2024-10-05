@@ -80,7 +80,8 @@ router.post(
       };
 
       // create a jwt auth signing it with the payload and return it
-      const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+      // const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+      const authToken = jwt.sign(payload, JWT_SECRET);
       res.status(200).json({
         success: true,
         authToken,
@@ -144,7 +145,8 @@ router.post(
         },
       };
 
-      const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+      // const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+      const authToken = jwt.sign(payload, JWT_SECRET);
 
       res.status(200).json({
         success: true,
