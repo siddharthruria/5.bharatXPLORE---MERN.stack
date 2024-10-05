@@ -1,0 +1,53 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  background: linear-gradient(to bottom, #4b4b4b, #5acdff, #11e3ff);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #282424;
+  border-bottom: 0.1vh solid #756f6f;
+  z-index: 1000;
+  
+}
+
+.navbar-nav {
+}
+.navbar a:not(.navbar-brand) {
+  color: white;
+  text-decoration: underline dotted;
+  text-decoration-color: #fff;
+  text-decoration-thickness: 15%;
+  text-underline-offset: 13%;
+
+  &:hover {
+    color: #c3e9fb;
+    text-decoration-color: #62bef8;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar a:not(.navbar-brand) {
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.navbar-toggler-icon {
+  background-image: url("../public/hamburger-menu.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+}
+
+.btn-primary {
+  background-color: #1e8fc0;
+  color: #fff;
+}
