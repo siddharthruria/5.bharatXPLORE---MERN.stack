@@ -12,11 +12,8 @@ body {
   background-color: #282424;
   border-bottom: 0.1vh solid #756f6f;
   z-index: 1000;
-  
 }
 
-.navbar-nav {
-}
 .navbar a:not(.navbar-brand) {
   color: white;
   text-decoration: underline dotted;
@@ -50,4 +47,15 @@ body {
 .btn-primary {
   background-color: #1e8fc0;
   color: #fff;
+}
+
+/* map  */
+
+.map-container {
+  height: 92.40vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

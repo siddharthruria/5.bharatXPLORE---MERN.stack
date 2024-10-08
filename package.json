@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "concurrently \"nodemon server/index.js\" \"npm run start:client\"",
+    "start:client": "cd client && npm run start"
+  },
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
