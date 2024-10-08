@@ -52,10 +52,18 @@ body {
 /* map  */
 
 .map-container {
-  height: 92.40vh;
+  height: 92.4vh;
   width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#svg-map {
+  filter: drop-shadow(0 4px 15px #ff0909ed);
+}
+
+#svg-map {
+  filter: drop-shadow(0px 20px 10px #000000);
 }
