@@ -31,7 +31,7 @@ const markerCoordinates
   INUP: { x: 435, y: 355 },
   INUT: { x: 390, y: 252 },
   INWB: { x: 627, y: 465 },
-  INLD: { x: 178, y: 815 },
+  INLD: { x: 210, y: 800 },
   INJK: { x: 270, y: 140 },
   INLA: { x: 333, y: 110 },
   INCH: { x: 325, y: 230 },

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { MapInteractionCSS } from "react-map-interaction";
-import markerCoordinates from "../markerCoordinates.js";
-import stateData from "../stateData.js";
+import markerCoordinates from "../assets/markerCoordinates.js";
+import stateData from "../assets/stateData.js";
+import customIcons from "../assets/customIcons.js";
 
 const IndiaMap = () => {
   const [scale, setScale] = useState(5);
+  const [clickedState, setClickedState] = useState(null);
 
   return (
     <div className="map-container">
@@ -15,7 +17,7 @@ const IndiaMap = () => {
           translation: { x: 0, y: 0 },
         }}
         minScale={0.07}
-        maxScale={3}
+        maxScale={3.69}
         style={{ cursor: "default" }}
         onScaleChange={(newScale) => setScale(newScale)}
         translationBounds={{
@@ -54,11 +56,11 @@ const IndiaMap = () => {
             return (
               <image
                 key={state}
-                href={`${process.env.PUBLIC_URL}/marker.jpeg`}
+                href={customIcons[state]}
                 x={x}
                 y={y}
-                width="21"
-                height="23"
+                width="24"
+                height="26"
                 cursor="pointer"
               />
             );
