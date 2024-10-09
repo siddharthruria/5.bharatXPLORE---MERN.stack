@@ -6,7 +6,7 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a
+          <span
             style={{
               marginLeft: "1.0vw",
               background:
@@ -19,7 +19,7 @@ const Navbar = () => {
             className="navbar-brand"
           >
             <b>BharatXPLORE</b>
-          </a>
+          </span>
           <button
             className="navbar-toggler"
             type="button"

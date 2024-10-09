@@ -1,4 +1,5 @@
-const stateCoordinates = {
+const markerCoordinates
+ = {
   INAN: { x: 767, y: 750 },
   INTG: { x: 388, y: 620 },
   INAP: { x: 390, y: 705 },
@@ -36,4 +37,5 @@ const stateCoordinates = {
   INCH: { x: 325, y: 230 },
 };
 
-export default stateCoordinates;
+export default markerCoordinates
+;

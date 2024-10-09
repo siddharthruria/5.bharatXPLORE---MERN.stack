@@ -5,6 +5,7 @@ body {
   background: linear-gradient(to bottom, #4b4b4b, #5acdff, #11e3ff);
   background-size: cover;
   background-attachment: fixed;
+  cursor: cursor;
 }
 
 .navbar {
@@ -60,10 +61,10 @@ body {
   align-items: center;
 }
 
-#svg-map {
+/* #svg-map {
   filter: drop-shadow(0 4px 15px #ff0909ed);
-}
+} */
 
 #svg-map {
-  filter: drop-shadow(0px 20px 10px #000000);
+  filter: drop-shadow(10px 25px 10px #ff2a2a);
 }
