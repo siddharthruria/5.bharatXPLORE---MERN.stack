@@ -6,6 +6,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fetchUser = require("../middleware/fetchUser");
+const Token = require("../models/Token");
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -80,11 +81,13 @@ router.post(
       };
 
       // create a jwt auth signing it with the payload and return it
-      // const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
-      const authToken = jwt.sign(payload, JWT_SECRET);
+      const token = jwt.sign(payload, JWT_SECRET);
+      const newToken = new Token({ token, username: user._id });
+      await newToken.save();
+      res.cookie("token", token, { httpOnly: true, secure: true });
       res.status(200).json({
         success: true,
-        authToken,
+        message: "user created successfully",
       });
     } catch (error) {
       console.error(error.message);
@@ -145,12 +148,23 @@ router.post(
         },
       };
 
-      // const authToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
-      const authToken = jwt.sign(payload, JWT_SECRET);
+      const token = jwt.sign(payload, JWT_SECRET);
+      let existingToken = await Token.findOne({ username: user._id });
 
+      if (existingToken) {
+        // If a token already exists, update the existing token
+        existingToken.token = token;
+        await existingToken.save();
+      } else {
+        // If no token exists, create a new one
+        const newToken = new Token({ token, username: user._id });
+        await newToken.save();
+      }
+
+      res.cookie("token", token, { httpOnly: true, secure: true });
       res.status(200).json({
         success: true,
-        authToken,
+        message: "authentication successful",
       });
     } catch (error) {
       console.error(error.message);

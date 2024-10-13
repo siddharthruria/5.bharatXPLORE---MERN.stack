@@ -1,14 +1,22 @@
 // middleware to verify whether to give the right logged in user the details
 
 const jwt = require("jsonwebtoken");
+const Token = require("../models/Token");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const fetchUser = async (req, res, next) => {
-  const token = req.header("auth-token");
+  const token = req.cookies.token;
 
   // if no token available, send 401
   if (!token) {
+    return res.status(401).json({
+      success: false,
+      error: "no token provided",
+    });
+  }
+  const storedToken = await Token.findOne({ token });
+  if (!storedToken) {
     return res.status(401).json({
       success: false,
       error: "please authenticate using a valid token",

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ selectedState }) => {
+ 
   return (
     <>
       <nav className="navbar navbar-expand-lg">
@@ -48,7 +49,7 @@ const Navbar = () => {
                   style={{ marginLeft: "1.2vw" }}
                   className="nav-link"
                   to="/your-contributions"
-                  target="_blank"
+                  // target="_blank"
                 >
                   your-contributions
                 </Link>
@@ -58,19 +59,56 @@ const Navbar = () => {
                   style={{ marginLeft: "1.2vw" }}
                   className="nav-link"
                   to="/contact-dev"
-                  target="_blank"
+                  // target="_blank"
                 >
                   contact-dev
                 </Link>
               </li>
             </ul>
+            <div
+              className="navbar-buttons"
+              style={{ display: "flex", marginRight: "10%" }}
+            >
+              {selectedState && (
+                <Link
+                  to="/contribute"
+                  type="button"
+                  className="buttons btn btn-primary btn-sm"
+                  // target="_blank"
+                  style={{ textDecoration: "none" }}
+                >
+                  contribute
+                </Link>
+              )}
+
+              {selectedState && (
+                <div
+                  className="selected-state"
+                  style={{ color: "white", backgroundColor: "red" }}
+                >
+                  <h5>{selectedState}</h5>
+                </div>
+              )}
+
+              {selectedState && (
+                <Link
+                  to="/all-contributions"
+                  type="button"
+                  className="buttons btn btn-primary btn-sm"
+                  // target="_blank"
+                  style={{ textDecoration: "none" }}
+                >
+                  see all contributions
+                </Link>
+              )}
+            </div>
             {!localStorage.getItem("token") ? (
               <form className="d-flex">
                 <Link
                   to="/login"
                   style={{ marginRight: "0.7vw", textDecoration: "none" }}
                   type="button"
-                  className="btn btn-primary"
+                  className="buttons btn btn-primary"
                 >
                   login
                 </Link>
@@ -78,7 +116,7 @@ const Navbar = () => {
                   to="/signup"
                   style={{ textDecoration: "none" }}
                   type="button"
-                  className="btn btn-primary"
+                  className="buttons btn btn-primary"
                 >
                   signup
                 </Link>
@@ -96,7 +134,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <div className="gradient-background"></div>
     </>
   );
 };

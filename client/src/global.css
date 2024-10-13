@@ -13,10 +13,13 @@ body {
   background-color: #282424;
   border-bottom: 0.1vh solid #756f6f;
   z-index: 1000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .navbar a:not(.navbar-brand) {
-  color: white;
+  color: #26e0d1ca;
   text-decoration: underline dotted;
   text-decoration-color: #fff;
   text-decoration-thickness: 15%;
@@ -26,6 +29,11 @@ body {
     color: #c3e9fb;
     text-decoration-color: #62bef8;
   }
+}
+
+.buttons {
+  color: #000 !important;
+  font-weight: 690;
 }
 
 @media (min-width: 992px) {

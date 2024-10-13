@@ -4,12 +4,16 @@ import markerCoordinates from "../assets/markerCoordinates.js";
 import stateData from "../assets/stateData.js";
 import customIcons from "../assets/customIcons.js";
 
-const IndiaMap = () => {
+const IndiaMap = ({ selctedState, setSelectedState }) => {
   const [scale, setScale] = useState(5);
-  const [clickedState, setClickedState] = useState(null);
 
   return (
-    <div className="map-container">
+    <div
+      className="map-container"
+      style={{
+        justifyContent: "start",
+      }}
+    >
       <MapInteractionCSS
         showControls
         defaultValue={{
@@ -37,12 +41,12 @@ const IndiaMap = () => {
             filter: "drop-shadow(4px 4px 1px #000000)",
           }}
         >
-          {Object.keys(stateData).map((state) => (
+          {stateData.map((state) => (
             <path
-              key={stateData[state].name}
-              id={stateData[state].name}
-              d={stateData[state].d}
-              fill={stateData[state].fill}
+              key={state.name}
+              id={state.name}
+              d={state.d}
+              fill={state.fill}
               stroke="black"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -52,7 +56,7 @@ const IndiaMap = () => {
           ))}
 
           {Object.keys(markerCoordinates).map((state) => {
-            const { x, y } = markerCoordinates[state];
+            const { x, y, name } = markerCoordinates[state];
             return (
               <image
                 key={state}
@@ -62,6 +66,7 @@ const IndiaMap = () => {
                 width="24"
                 height="26"
                 cursor="pointer"
+                onClick={() => setSelectedState(name)}
               />
             );
           })}
