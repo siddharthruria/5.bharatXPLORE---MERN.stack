@@ -84,9 +84,10 @@ router.post(
       const token = jwt.sign(payload, JWT_SECRET);
       const newToken = new Token({ token, username: user._id });
       await newToken.save();
-      res.cookie("token", token, { httpOnly: true, secure: true });
+      res.cookie("token", newToken, { httpOnly: true, secure: true });
       res.status(200).json({
         success: true,
+        newToken,
         message: "user created successfully",
       });
     } catch (error) {

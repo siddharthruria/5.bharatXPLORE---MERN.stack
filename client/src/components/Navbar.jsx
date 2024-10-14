@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = ({ selectedState }) => {
- 
+  const { token, logout } = useContext(UserContext);
   return (
     <>
       <nav className="navbar navbar-expand-lg">
@@ -102,7 +103,7 @@ const Navbar = ({ selectedState }) => {
                 </Link>
               )}
             </div>
-            {!localStorage.getItem("token") ? (
+            {!token ? (
               <form className="d-flex">
                 <Link
                   to="/login"
@@ -126,7 +127,8 @@ const Navbar = ({ selectedState }) => {
                 to="/login"
                 style={{ textDecoration: "none" }}
                 type="button"
-                className="btn btn-primary"
+                className="buttons btn btn-primary"
+                onClick={logout}
               >
                 logout
               </Link>

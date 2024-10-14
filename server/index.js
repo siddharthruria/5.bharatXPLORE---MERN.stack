@@ -7,6 +7,7 @@ const fetchUser = require("./middleware/fetchUser");
 const Token = require("./models/Token");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const admin_username = process.env.admin_username;
 const admin_email = process.env.admin_email;
@@ -14,6 +15,14 @@ const admin_password = process.env.admin_password;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
+
+const corsOptions = {
+  origin: "http://localhost:3000", // React app's origin
+  credentials: true, // Enable sending cookies and credentials
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

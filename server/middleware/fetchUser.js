@@ -18,6 +18,7 @@ const fetchUser = async (req, res, next) => {
   const storedToken = await Token.findOne({ token });
   if (!storedToken) {
     return res.status(401).json({
+      token,
       success: false,
       error: "please authenticate using a valid token",
     });

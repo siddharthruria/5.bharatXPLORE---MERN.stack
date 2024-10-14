@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MapInteractionCSS } from "react-map-interaction";
 import markerCoordinates from "../assets/markerCoordinates.js";
 import stateData from "../assets/stateData.js";
 import customIcons from "../assets/customIcons.js";
+import { UserContext } from "../context/UserContext.js";
 
 const IndiaMap = ({ selctedState, setSelectedState }) => {
+  const { token } = useContext(UserContext);
   const [scale, setScale] = useState(5);
 
   return (
@@ -55,21 +57,22 @@ const IndiaMap = ({ selctedState, setSelectedState }) => {
             />
           ))}
 
-          {Object.keys(markerCoordinates).map((state) => {
-            const { x, y, name } = markerCoordinates[state];
-            return (
-              <image
-                key={state}
-                href={customIcons[state]}
-                x={x}
-                y={y}
-                width="24"
-                height="26"
-                cursor="pointer"
-                onClick={() => setSelectedState(name)}
-              />
-            );
-          })}
+          {token &&
+            Object.keys(markerCoordinates).map((state) => {
+              const { x, y, name } = markerCoordinates[state];
+              return (
+                <image
+                  key={state}
+                  href={customIcons[state]}
+                  x={x}
+                  y={y}
+                  width="24"
+                  height="26"
+                  cursor="pointer"
+                  onClick={() => setSelectedState(name)}
+                />
+              );
+            })}
         </svg>
       </MapInteractionCSS>
     </div>

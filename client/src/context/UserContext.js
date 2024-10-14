@@ -14,11 +14,12 @@ const UserProvider = ({ children }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
+        credentials: "include",
       });
       if (!response.ok) {
-        throw new Error("token invalid or server restarted");
+        console.error("token invalid or server restarted");
       }
       const userData = await response.json();
       setUser(userData.user);
