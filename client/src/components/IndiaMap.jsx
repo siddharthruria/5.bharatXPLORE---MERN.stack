@@ -5,8 +5,8 @@ import stateData from "../assets/stateData.js";
 import customIcons from "../assets/customIcons.js";
 import { UserContext } from "../context/UserContext.js";
 
-const IndiaMap = ({ selctedState, setSelectedState }) => {
-  const { token } = useContext(UserContext);
+const IndiaMap = ({ setSelectedState }) => {
+  const {  getCookie } = useContext(UserContext);
   const [scale, setScale] = useState(5);
 
   return (
@@ -57,7 +57,7 @@ const IndiaMap = ({ selctedState, setSelectedState }) => {
             />
           ))}
 
-          {token &&
+          {getCookie("token") &&
             Object.keys(markerCoordinates).map((state) => {
               const { x, y, name } = markerCoordinates[state];
               return (

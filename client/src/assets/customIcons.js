@@ -10,7 +10,6 @@ const customIcons = {
   INCH: `${process.env.PUBLIC_URL}/state-icons/chandigarh.png`,
   INCT: `${process.env.PUBLIC_URL}/state-icons/chattisgarh.png`,
   INDH: `${process.env.PUBLIC_URL}/state-icons/dadra.png`,
-  INDL: `${process.env.PUBLIC_URL}/state-icons/delhi.png`,
   INGA: `${process.env.PUBLIC_URL}/state-icons/goa.png`,
   INGJ: `${process.env.PUBLIC_URL}/state-icons/gujarat.png`,
   INHR: `${process.env.PUBLIC_URL}/state-icons/haryana.png`,

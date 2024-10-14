@@ -84,7 +84,12 @@ router.post(
       const token = jwt.sign(payload, JWT_SECRET);
       const newToken = new Token({ token, username: user._id });
       await newToken.save();
-      res.cookie("token", newToken, { httpOnly: true, secure: true });
+      res.cookie("token", token, {
+        // httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+        maxAge: 4 * 24 * 60 * 60 * 1000, // Persist for 30 days
+        // sameSite: "Strict",
+      });
       res.status(200).json({
         success: true,
         newToken,
@@ -128,7 +133,7 @@ router.post(
       if (!user) {
         return res.status(400).json({
           success: false,
-          error: `invalid username or email`,
+          error: "invalid username or email",
         });
       }
 
@@ -153,18 +158,24 @@ router.post(
       let existingToken = await Token.findOne({ username: user._id });
 
       if (existingToken) {
-        // If a token already exists, update the existing token
+        // if a token already exists, update the existing token
         existingToken.token = token;
         await existingToken.save();
       } else {
-        // If no token exists, create a new one
+        // if no token exists, create a new one
         const newToken = new Token({ token, username: user._id });
         await newToken.save();
       }
 
-      res.cookie("token", token, { httpOnly: true, secure: true });
+      res.cookie("token", token, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+        maxAge: 4 * 24 * 60 * 60 * 1000, // Persist for 30 days
+        // sameSite: "Strict",
+      });
       res.status(200).json({
         success: true,
+        token,
         message: "authentication successful",
       });
     } catch (error) {

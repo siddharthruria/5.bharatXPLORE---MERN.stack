@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Navbar = ({ selectedState }) => {
-  const { token, logout } = useContext(UserContext);
+  const { logout, getCookie } = useContext(UserContext);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg">
@@ -103,7 +104,7 @@ const Navbar = ({ selectedState }) => {
                 </Link>
               )}
             </div>
-            {!token ? (
+            {!getCookie("token") ? (
               <form className="d-flex">
                 <Link
                   to="/login"

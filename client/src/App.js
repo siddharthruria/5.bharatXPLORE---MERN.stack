@@ -25,7 +25,6 @@ function App() {
               path="/"
               element={
                 <IndiaMap
-                  selectedState={selectedState}
                   setSelectedState={setSelectedState}
                 />
               }

@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       });
@@ -37,11 +37,16 @@ const UserProvider = ({ children }) => {
   }, [token]);
 
   const login = (token) => {
-    document.cookie = `token=${token}; path=/;`; // store token in cookies
+    const expirationDays = 4; // set cookie for 4 days
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + expirationDays);
+
+    document.cookie = `token=${token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`; // store token in cookies with expiration
     setToken(token); // set token in context state
     fetchUserData(token); // fetch user data based on new token
     navigate("/"); // redirect after login
   };
+
   const logout = () => {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // clear token from cookies
     setToken(null); // clear token from context
@@ -49,8 +54,19 @@ const UserProvider = ({ children }) => {
     navigate("/login"); // redirect to login page
   };
 
+  // function getCookie(name) {
+  //   const cookies = document.cookie.split(";");
+  //   for (let cookie of cookies) {
+  //     const [key, value] = cookie.split("=");
+  //     if (key === name) {
+  //       return value;
+  //     }
+  //   }
+  //   return null;
+  // }
+
   function getCookie(name) {
-    const cookies = document.cookie.split(";");
+    const cookies = document.cookie.split("; ");
     for (let i = 0; i < cookies.length; ++i) {
       const cookie = cookies[i].trim();
       if (cookie.startsWith(name + "=")) {
@@ -61,7 +77,7 @@ const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ user, token, login, logout }}>
+    <UserContext.Provider value={{ user, token, login, logout, getCookie }}>
       {children}
     </UserContext.Provider>
   );

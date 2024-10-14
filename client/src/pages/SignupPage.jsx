@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { UserContext } from "../context/UserContext";
 
@@ -13,7 +12,6 @@ const SignupPage = () => {
     cpassword: "",
   });
 
-  let navigate = useNavigate();
 
   const handleSubmitFunction = async (e) => {
     e.preventDefault();
@@ -31,7 +29,6 @@ const SignupPage = () => {
     });
 
     const responseData = await response.json();
-    console.log(responseData);
     if (responseData.success) {
       login(responseData.newToken.token);
       enqueueSnackbar("account created successfully", { variant: "success" });
