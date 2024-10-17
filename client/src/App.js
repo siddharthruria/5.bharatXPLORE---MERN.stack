@@ -10,40 +10,58 @@ import YourContributionsPage from "./pages/YourContributionsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import UserProvider from "./context/UserContext";
+import ContributionProvider from "./context/ContributionContext";
 
 function App() {
   const [selectedState, setSelectedState] = useState(null);
+  const [selectedStateId, setSelectedStateId] = useState(null);
 
   return (
     <>
       <Router>
         <UserProvider>
-          <Navbar selectedState={selectedState} />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <IndiaMap
-                  setSelectedState={setSelectedState}
-                />
-              }
+          <ContributionProvider>
+            <Navbar
+              setSelectedState={setSelectedState}
+              selectedState={selectedState}
+              selectedStateId={selectedStateId}
             />
-            <Route
-              exact
-              path="/your-contributions"
-              element={<YourContributionsPage />}
-            />
-            <Route exact path="/contact-dev" element={<ContactDevPage />} />
-            <Route exact path="/contribute" element={<ContributePage />} />
-            <Route
-              exact
-              path="/all-contributions"
-              element={<AllContributionsPage />}
-            />
-            <Route exact path="/login" element={<LoginPage />} />
-            <Route exact path="/signup" element={<SignupPage />} />
-          </Routes>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <IndiaMap
+                    setSelectedState={setSelectedState}
+                    setSelectedStateId={setSelectedStateId}
+                  />
+                }
+              />
+              <Route
+                exact
+                path="/your-contributions"
+                element={<YourContributionsPage />}
+              />
+              <Route exact path="/contact-dev" element={<ContactDevPage />} />
+              <Route
+                exact
+                path={`/contribute/${selectedStateId}`}
+                element={
+                  <ContributePage
+                    selectedState={selectedState}
+                    selectedStateId={selectedStateId}
+                  />
+                }
+              />
+              <Route
+                exact
+                path="/all-contributions"
+                element={<AllContributionsPage />}
+              />
+              <Route exact path="/login" element={<LoginPage />} />
+              <Route exact path="/signup" element={<SignupPage />} />
+            </Routes>
+          </ContributionProvider>
         </UserProvider>
       </Router>
     </>

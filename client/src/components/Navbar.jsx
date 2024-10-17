@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-const Navbar = ({ selectedState }) => {
+const Navbar = ({ setSelectedState, selectedState, selectedStateId }) => {
   const { logout, getCookie } = useContext(UserContext);
+  const location = useLocation();
 
   return (
     <>
@@ -51,7 +52,6 @@ const Navbar = ({ selectedState }) => {
                   style={{ marginLeft: "1.2vw" }}
                   className="nav-link"
                   to="/your-contributions"
-                  // target="_blank"
                 >
                   your-contributions
                 </Link>
@@ -61,7 +61,6 @@ const Navbar = ({ selectedState }) => {
                   style={{ marginLeft: "1.2vw" }}
                   className="nav-link"
                   to="/contact-dev"
-                  // target="_blank"
                 >
                   contact-dev
                 </Link>
@@ -71,38 +70,42 @@ const Navbar = ({ selectedState }) => {
               className="navbar-buttons"
               style={{ display: "flex", marginRight: "10%" }}
             >
-              {selectedState && (
-                <Link
-                  to="/contribute"
-                  type="button"
-                  className="buttons btn btn-primary btn-sm"
-                  // target="_blank"
-                  style={{ textDecoration: "none" }}
-                >
-                  contribute
-                </Link>
-              )}
+              {selectedState &&
+                getCookie("token") &&
+                location.pathname === "/" && (
+                  <Link
+                    to={`/contribute/${selectedStateId}`}
+                    type="button"
+                    className="buttons btn btn-primary btn-sm"
+                    style={{ textDecoration: "none" }}
+                  >
+                    contribute
+                  </Link>
+                )}
 
-              {selectedState && (
-                <div
-                  className="selected-state"
-                  style={{ color: "white", backgroundColor: "red" }}
-                >
-                  <h5>{selectedState}</h5>
-                </div>
-              )}
+              {selectedState &&
+                getCookie("token") &&
+                location.pathname === "/" && (
+                  <div
+                    className="selected-state"
+                    style={{ color: "white", backgroundColor: "red" }}
+                  >
+                    <h5>{selectedState}</h5>
+                  </div>
+                )}
 
-              {selectedState && (
-                <Link
-                  to="/all-contributions"
-                  type="button"
-                  className="buttons btn btn-primary btn-sm"
-                  // target="_blank"
-                  style={{ textDecoration: "none" }}
-                >
-                  see all contributions
-                </Link>
-              )}
+              {selectedState &&
+                getCookie("token") &&
+                location.pathname === "/" && (
+                  <Link
+                    to="/all-contributions"
+                    type="button"
+                    className="buttons btn btn-primary btn-sm"
+                    style={{ textDecoration: "none" }}
+                  >
+                    see all contributions
+                  </Link>
+                )}
             </div>
             {!getCookie("token") ? (
               <form className="d-flex">
@@ -129,7 +132,10 @@ const Navbar = ({ selectedState }) => {
                 style={{ textDecoration: "none" }}
                 type="button"
                 className="buttons btn btn-primary"
-                onClick={logout}
+                onClick={() => {
+                  setSelectedState(null);
+                  logout();
+                }}
               >
                 logout
               </Link>

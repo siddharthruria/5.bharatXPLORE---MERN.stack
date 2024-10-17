@@ -6,9 +6,17 @@ const stateSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  description: {
+  stateCode: {
     type: String,
     required: true,
+    unique: true,
+  },
+  description: {
+    capitalCity: { type: String, required: true },
+    population: { type: String, required: true },
+    areaByLand: { type: String, required: true },
+    popularTouristAttraction: { type: String, required: true },
+    commonlySpokenLanguage: { type: String, required: true },
   },
   contributions: [
     {

@@ -72,7 +72,7 @@ router.post(
   isAdmin,
   [
     body("name", "name is required").notEmpty(),
-    body("description", "description is required").notEmpty(),
+    // body("description", "description is required").notEmpty(),
     body("images", "images must be an array").isArray().optional(),
   ],
   async (req, res) => {
@@ -86,15 +86,23 @@ router.post(
       }
 
       // destructure values from req.body
-      const { name, description, images } = req.body;
+      const { name, description, stateCode, images } = req.body;
 
       const state = new State({
         name,
-        description,
+        description: {
+          capitalCity: description.capitalCity,
+          population: description.population,
+          areaByLand: description.areaByLand,
+          popularTouristAttraction: description.popularTouristAttraction,
+          commonlySpokenLanguage: description.commonlySpokenLanguage,
+        },
         images,
+        stateCode,
       });
 
       const savedState = await state.save();
+
       res.json({
         success: true,
         message: "state created successfully",

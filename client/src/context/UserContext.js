@@ -23,6 +23,7 @@ const UserProvider = ({ children }) => {
       }
       const userData = await response.json();
       setUser(userData.user);
+      navigate("/");
     } catch (error) {
       setToken(null);
       setUser(null);
@@ -53,17 +54,6 @@ const UserProvider = ({ children }) => {
     setUser(null); // clear user data from context
     navigate("/login"); // redirect to login page
   };
-
-  // function getCookie(name) {
-  //   const cookies = document.cookie.split(";");
-  //   for (let cookie of cookies) {
-  //     const [key, value] = cookie.split("=");
-  //     if (key === name) {
-  //       return value;
-  //     }
-  //   }
-  //   return null;
-  // }
 
   function getCookie(name) {
     const cookies = document.cookie.split("; ");

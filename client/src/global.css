@@ -69,10 +69,6 @@ body {
   align-items: center;
 }
 
-/* #svg-map {
-  filter: drop-shadow(0 4px 15px #ff0909ed);
-} */
-
 #svg-map {
   filter: drop-shadow(10px 25px 10px #ff2a2a);
 }

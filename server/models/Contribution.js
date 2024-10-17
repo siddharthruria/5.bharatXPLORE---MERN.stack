@@ -5,8 +5,8 @@ const contributionSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  state: {
-    type: mongoose.Schema.Types.ObjectId,
+  stateCode: {
+    type: String,
     ref: "State",
   },
   category: {
@@ -17,6 +17,10 @@ const contributionSchema = mongoose.Schema({
       "food recommendations",
       "gossips and trending topics",
     ],
+    required: true,
+  },
+  heading: {
+    type: String,
     required: true,
   },
   content: {

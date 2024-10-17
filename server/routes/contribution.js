@@ -3,26 +3,38 @@
 const express = require("express");
 const fetchUser = require("../middleware/fetchUser");
 const Contribution = require("../models/Contribution");
+const State = require("../models/State");
 
 const router = express.Router();
 
 // ------------------------------- ROUTE 1 -------------------------------
 
-// route (/api/states/:stateId/contributions)
+// route (/api/states/:stateCode/contributions)
 
 // POST -> create new contribution for a state
 
-router.post("/:stateId/contributions", fetchUser, async (req, res) => {
+router.post("/:stateCode/contributions", fetchUser, async (req, res) => {
   try {
-    const stateId = req.params.stateId;
-    if (!stateId) {
+    const { stateCode } = req.params;
+
+    if (!stateCode) {
       return res.status(404).json({
         success: false,
         error: "state not found",
       });
     }
 
-    const { category, content, images } = req.body;
+    const state = await State.findOne({ stateCode });
+
+    if (!state) {
+      return res.status(404).json({
+        success: false,
+        error: "state not found",
+      });
+    }
+
+    const { category, heading, content, images } = req.body;
+
     if (!category) {
       return res.status(400).json({
         success: false,
@@ -36,15 +48,20 @@ router.post("/:stateId/contributions", fetchUser, async (req, res) => {
         error: "content is required",
       });
     }
-    const newStateContribution = new Contribution({
+    const contribution = new Contribution({
       user: req.user.id,
-      state: stateId,
+      stateCode,
       category,
+      heading,
       content,
       images,
     });
 
-    const savedStateContribution = await newStateContribution.save();
+    const savedStateContribution = await contribution.save();
+
+    state.contributions.push(savedStateContribution._id);
+
+    await state.save();
 
     res.status(200).json({
       success: true,

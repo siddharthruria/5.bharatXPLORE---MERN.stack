@@ -5,8 +5,8 @@ import stateData from "../assets/stateData.js";
 import customIcons from "../assets/customIcons.js";
 import { UserContext } from "../context/UserContext.js";
 
-const IndiaMap = ({ setSelectedState }) => {
-  const {  getCookie } = useContext(UserContext);
+const IndiaMap = ({ setSelectedState, setSelectedStateId }) => {
+  const { getCookie } = useContext(UserContext);
   const [scale, setScale] = useState(5);
 
   return (
@@ -53,7 +53,7 @@ const IndiaMap = ({ setSelectedState }) => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              cursor="pointer"
+              cursor={getCookie("token") ? "pointer" : "default"}
             />
           ))}
 
@@ -69,7 +69,10 @@ const IndiaMap = ({ setSelectedState }) => {
                   width="24"
                   height="26"
                   cursor="pointer"
-                  onClick={() => setSelectedState(name)}
+                  onClick={() => {
+                    setSelectedState(name);
+                    setSelectedStateId(state);
+                  }}
                 />
               );
             })}
