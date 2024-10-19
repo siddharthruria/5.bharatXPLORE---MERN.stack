@@ -55,8 +55,13 @@ function App() {
               />
               <Route
                 exact
-                path="/all-contributions"
-                element={<AllContributionsPage />}
+                path={`/all-contributions/${selectedStateId}`}
+                element={
+                  <AllContributionsPage
+                    selectedStateId={selectedStateId}
+                    selectedState={selectedState}
+                  />
+                }
               />
               <Route exact path="/login" element={<LoginPage />} />
               <Route exact path="/signup" element={<SignupPage />} />

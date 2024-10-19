@@ -98,7 +98,7 @@ const Navbar = ({ setSelectedState, selectedState, selectedStateId }) => {
                 getCookie("token") &&
                 location.pathname === "/" && (
                   <Link
-                    to="/all-contributions"
+                    to={`/all-contributions/${selectedStateId}`}
                     type="button"
                     className="buttons btn btn-primary btn-sm"
                     style={{ textDecoration: "none" }}

@@ -210,25 +210,33 @@ router.delete("/:stateId", fetchUser, isAdmin, async (req, res) => {
 
 // ------------------------------- ROUTE 6 -------------------------------
 
-// route (/api/states/:stateId/contributions)
+// route (/api/states/:stateCode/contributions)
 
 // GET -> get all contributions of a state
 
-router.get("/:stateId/contributions", fetchUser, async (req, res) => {
+router.get("/:stateCode/contributions", fetchUser, async (req, res) => {
   try {
-    const contributions = await Contribution.find({
-      state: req.params.stateId,
+    const { stateCode } = req.params;
+
+    const state = await State.findOne({ stateCode }).populate({
+      path: "contributions",
+      populate: {
+        path: "user", // Assuming contributions reference users
+        select: "username", // Select username of the contributor
+      },
     });
-    if (!contributions) {
+
+    if (!state) {
       return res.status(404).json({
         success: false,
-        error: "state not found",
+        error: "contributions for this state not found :/",
       });
     }
+
     res.status(200).json({
       success: true,
-      message: "contributions for the state",
-      contributions,
+      message: "here are the state details",
+      contributions: state.contributions,
     });
   } catch (error) {
     console.error(error);
@@ -238,4 +246,5 @@ router.get("/:stateId/contributions", fetchUser, async (req, res) => {
     });
   }
 });
+
 module.exports = router;

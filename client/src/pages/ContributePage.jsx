@@ -54,17 +54,7 @@ const ContributePage = ({ selectedState, selectedStateId }) => {
             alignItems: "center",
           }}
         >
-          you're contributing for
-        </h2>
-        <h2
-          style={{
-            display: "flex",
-            marginTop: "20px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          ~ {selectedState}
+          you're contributing for ~ {selectedState}
         </h2>
       </div>
       <form onSubmit={handleSubmitFunction}>

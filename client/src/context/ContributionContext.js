@@ -9,6 +9,8 @@ const ContributionProvider = ({ children }) => {
 
   const host = "http://localhost:5555";
 
+  // ------------------------------  CREATING A NEW CONTRIBUTION ------------------------------
+
   const createContrbution = async (contributionData) => {
     try {
       const response = await fetch(
@@ -35,8 +37,37 @@ const ContributionProvider = ({ children }) => {
     }
   };
 
+  // ------------------------------  FETCHING ALL CONTRIBUTIONS ------------------------------
+
+  const fetchContributions = async (stateCode) => {
+    try {
+      const response = await fetch(
+        `${host}/api/states/${stateCode}/contributions`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setContributions(result.contributions);
+      } else {
+        return console.error("error fetching contributions", result.error);
+      }
+    } catch (error) {
+      return console.error("error fetching contributions", error);
+    }
+  };
+
   return (
-    <ContributionContext.Provider value={{ contributions, createContrbution }}>
+    <ContributionContext.Provider
+      value={{ contributions, createContrbution, fetchContributions }}
+    >
       {children}
     </ContributionContext.Provider>
   );
