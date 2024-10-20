@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState } from "react";
 import { UserContext } from "./UserContext";
+import { useSnackbar } from "notistack";
 
 export const ContributionContext = createContext();
 
 const ContributionProvider = ({ children }) => {
   const { token } = useContext(UserContext);
   const [contributions, setContributions] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const host = "http://localhost:5555";
 
@@ -90,6 +92,9 @@ const ContributionProvider = ({ children }) => {
               : contribution
           )
         );
+        enqueueSnackbar("contribution updated successfully", {
+          variant: "success",
+        });
       } else {
         return console.error("error updating contribution", result.error);
       }
@@ -121,6 +126,7 @@ const ContributionProvider = ({ children }) => {
             (contribution) => contribution._id !== contributionId
           )
         );
+        enqueueSnackbar("contribution deleted :|", { variant: "error" });
       } else {
         return console.error("error deleting contribution", result.error);
       }

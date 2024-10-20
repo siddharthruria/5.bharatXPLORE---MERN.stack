@@ -3,21 +3,21 @@ import Modal from "react-bootstrap/Modal";
 
 const ContributionModal = ({ contribution, closeModal }) => {
   return (
-    <Modal show onHide={closeModal}>
+    <Modal show onHide={closeModal} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>{contribution.heading}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
-          <strong>Category: </strong>
+          <strong>category: </strong>
           {contribution.category}
         </p>
         <p>
-          <strong>Contributor: </strong>
+          <strong>contributor: </strong>
           {contribution.user.username}
         </p>
         <p>
-          <strong>Content: </strong>
+          <strong>content: </strong>
           {contribution.content}
         </p>
       </Modal.Body>

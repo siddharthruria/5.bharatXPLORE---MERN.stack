@@ -72,3 +72,8 @@ body {
 #svg-map {
   filter: drop-shadow(10px 25px 10px #ff2a2a);
 }
+.contribution-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 30px;
+}

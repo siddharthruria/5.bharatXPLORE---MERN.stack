@@ -22,12 +22,19 @@ const AllContributionsPage = ({ selectedStateId, selectedState }) => {
         all contributions for ~ {selectedState}
       </h2>
       <div className="contribution-list mt-5">
-        {contributions.map((contribution) => (
-          <ContributionCard
-            key={contribution._id}
-            contribution={contribution}
-          />
-        ))}
+        {contributions.length === 0 ? (
+          <h5>
+            no contributions available for {selectedState} :/ <br />
+            <br /> be the first one to contribute!
+          </h5>
+        ) : (
+          contributions.map((contribution) => (
+            <ContributionCard
+              key={contribution._id}
+              contribution={contribution}
+            />
+          ))
+        )}
       </div>
     </div>
   );
