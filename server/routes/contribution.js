@@ -131,11 +131,12 @@ router.put("/contributions/:contributionId", fetchUser, async (req, res) => {
       });
     }
 
-    const { category, content, images } = req.body;
+    const { category, heading, content, images } = req.body;
 
     if (category) contribution.category = category;
     if (content) contribution.content = content;
     if (images) contribution.images = images;
+    if (heading) contribution.heading = heading;
 
     const updatedContribution = await contribution.save();
     res.status(200).json({
@@ -176,7 +177,13 @@ router.delete("/contributions/:contributionId", fetchUser, async (req, res) => {
       });
     }
 
+    await State.updateOne(
+      { contributions: contributionId }, // Find the state with this contribution
+      { $pull: { contributions: contributionId } } // Remove the contribution reference
+    );
+
     await Contribution.findByIdAndDelete(contributionId);
+
     return res.status(200).json({
       success: true,
       message: "contribution deleted successfully",

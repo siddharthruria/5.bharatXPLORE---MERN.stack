@@ -64,9 +64,79 @@ const ContributionProvider = ({ children }) => {
     }
   };
 
+  // ------------------------------  UPDATING A CONTRIBUTION ------------------------------
+
+  const updateContribution = async (contributionId, updatedData) => {
+    try {
+      const response = await fetch(
+        `${host}/api/states/contributions/${contributionId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(updatedData), // Send the updated contribution data
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setContributions((prevContributions) =>
+          prevContributions.map((contribution) =>
+            contribution._id === contributionId
+              ? { ...contribution, ...updatedData } // Update the specific contribution
+              : contribution
+          )
+        );
+      } else {
+        return console.error("error updating contribution", result.error);
+      }
+    } catch (error) {
+      return console.error("error updating contribution", error);
+    }
+  };
+
+  // ------------------------------  DELETING A CONTRIBUTION ------------------------------
+
+  const deleteContribution = async (contributionId) => {
+    try {
+      const response = await fetch(
+        `${host}/api/states/contributions/${contributionId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setContributions((prevContributions) =>
+          prevContributions.filter(
+            (contribution) => contribution._id !== contributionId
+          )
+        );
+      } else {
+        return console.error("error deleting contribution", result.error);
+      }
+    } catch (error) {
+      return console.error("error deleting contribution", error);
+    }
+  };
   return (
     <ContributionContext.Provider
-      value={{ contributions, createContrbution, fetchContributions }}
+      value={{
+        contributions,
+        createContrbution,
+        fetchContributions,
+        updateContribution,
+        deleteContribution,
+      }}
     >
       {children}
     </ContributionContext.Provider>
