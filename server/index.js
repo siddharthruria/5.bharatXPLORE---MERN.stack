@@ -17,7 +17,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000", // React app's origin
+  origin: "https://five-bharatxplore-mern-stack.onrender.com/", // React app's origin
   credentials: true, // Enable sending cookies and credentials
 };
 

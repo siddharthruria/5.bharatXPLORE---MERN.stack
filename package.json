@@ -1,11 +1,7 @@
 {
   "scripts": {
     "start": "concurrently \"nodemon server/index.js\" \"npm run start:client\"",
-    "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
-    "start:client": "cd client && npm run start",
-    "build:client": "cd client && npm run build",
-    "start:server": "cd server && npm run start",
-    "build:server": "cd server && npm run build"
+    "start:client": "cd client && npm run start"
   },
   "dependencies": {
     "concurrently": "^9.0.1"

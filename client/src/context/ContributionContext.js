@@ -10,7 +10,7 @@ const ContributionProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [userContributions, setUserContributions] = useState([]);
 
-  const host = "http://localhost:5555";
+  const host = "https://bharatxplore-backend7.onrender.com/";
 
   // ------------------------------  CREATING A NEW CONTRIBUTION ------------------------------
 
