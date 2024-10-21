@@ -23,7 +23,7 @@ const AllContributionsPage = ({ selectedStateId, selectedState }) => {
       </h2>
       <div className="contribution-list mt-5">
         {contributions.length === 0 ? (
-          <h5>
+          <h5 style={{ width: "100vw" }}>
             no contributions available for {selectedState} :/ <br />
             <br /> be the first one to contribute!
           </h5>

@@ -15,6 +15,8 @@ import ContributionProvider from "./context/ContributionContext";
 function App() {
   const [selectedState, setSelectedState] = useState(null);
   const [selectedStateId, setSelectedStateId] = useState(null);
+  // const { user } = useContext(UserContext);
+  // const username = user.username;
 
   return (
     <>
@@ -39,6 +41,7 @@ function App() {
               />
               <Route
                 exact
+                // path={`/your-contributions/${username}`}
                 path="/your-contributions"
                 element={<YourContributionsPage />}
               />

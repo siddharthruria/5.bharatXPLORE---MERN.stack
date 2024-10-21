@@ -8,6 +8,7 @@ const ContributionProvider = ({ children }) => {
   const { token } = useContext(UserContext);
   const [contributions, setContributions] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+  const [userContributions, setUserContributions] = useState([]);
 
   const host = "http://localhost:5555";
 
@@ -66,6 +67,33 @@ const ContributionProvider = ({ children }) => {
     }
   };
 
+  // ------------------------------  FETCHING USER CONTRIBUTIONS ------------------------------
+
+  const fetchUserContributions = async (username) => {
+    try {
+      const response = await fetch(
+        `${host}/api/states/contributions/user/${username}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setUserContributions(result.contributions);
+      } else {
+        return console.error("error fetching user contributions", result.error);
+      }
+    } catch (error) {
+      return console.error("error fetching user contributions", error);
+    }
+  };
+
   // ------------------------------  UPDATING A CONTRIBUTION ------------------------------
 
   const updateContribution = async (contributionId, updatedData) => {
@@ -79,7 +107,7 @@ const ContributionProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
           credentials: "include",
-          body: JSON.stringify(updatedData), // Send the updated contribution data
+          body: JSON.stringify(updatedData), // send the updated contribution data
         }
       );
 
@@ -88,7 +116,7 @@ const ContributionProvider = ({ children }) => {
         setContributions((prevContributions) =>
           prevContributions.map((contribution) =>
             contribution._id === contributionId
-              ? { ...contribution, ...updatedData } // Update the specific contribution
+              ? { ...contribution, ...updatedData } // update the specific contribution
               : contribution
           )
         );
@@ -140,8 +168,10 @@ const ContributionProvider = ({ children }) => {
         contributions,
         createContrbution,
         fetchContributions,
+        fetchUserContributions,
         updateContribution,
         deleteContribution,
+        userContributions,
       }}
     >
       {children}

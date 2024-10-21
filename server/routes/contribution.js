@@ -4,6 +4,7 @@ const express = require("express");
 const fetchUser = require("../middleware/fetchUser");
 const Contribution = require("../models/Contribution");
 const State = require("../models/State");
+const User = require("../models/User");
 
 const router = express.Router();
 
@@ -110,6 +111,37 @@ router.get("/contributions/:contributionId", fetchUser, async (req, res) => {
 
 // ------------------------------- ROUTE 3 -------------------------------
 
+// route (/api/states/contributions/user/username)
+
+// GET -> get all contributions of user
+
+router.get("/contributions/user/:username", fetchUser, async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "user not found",
+      });
+    }
+    const userContribution = await Contribution.find({ user: user._id });
+    return res.status(200).json({
+      success: true,
+      contributions: userContribution,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      error: "internal server error :/",
+    });
+  }
+});
+
+// ------------------------------- ROUTE 4 -------------------------------
+
 // route (/api/states/contributions/:contributionId)
 
 // PUT -> update a specific contribution
@@ -153,7 +185,7 @@ router.put("/contributions/:contributionId", fetchUser, async (req, res) => {
   }
 });
 
-// ------------------------------- ROUTE 4 -------------------------------
+// ------------------------------- ROUTE 5 -------------------------------
 
 // route (/api/states/contributions/:contributionId)
 
